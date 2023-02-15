@@ -8,9 +8,10 @@
 
 set -eux
 
-go_mod_dir="${1}" 
+rancher_branch="${1}"
 operator_version="${2}" 
-file_to_print="${3}" ## go.mod or go.sum
+go_mod_dir="${3}" 
+file_to_print="${4}" ## go.mod or go.sum
 tmp_dir="$(mktemp -d)"
 
 ## Clone rancher repo to a temp directory an start working from this temp. dir.
@@ -18,6 +19,7 @@ cd "${tmp_dir}" >&2
 GOPATH="$(mktemp -d)"
 export GOPATH
 git clone https://github.com/alexander-demicev/rancher.git .
+git checkout ${rancher_branch}
 
 if [ "$go_mod_dir" = "pkg/apis" ]
 then
