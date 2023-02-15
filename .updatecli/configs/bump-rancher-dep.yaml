@@ -9,7 +9,6 @@ scms:
       owner: alexander-demicev
       repository: rancher
       token: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN" }}'
-      # username: '{{ requiredEnv "UPDATECLI_GITHUB_ACTOR" }}'
       branch: '{{ requiredEnv "UPDATECLI_RANCHER_BRANCH" }}'
   aks-operator:
     kind: github
@@ -17,7 +16,6 @@ scms:
       owner: alexander-demicev
       repository: aks-operator
       token: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN" }}'
-      # username: '{{ requiredEnv "UPDATECLI_GITHUB_ACTOR" }}'
       branch: master
 
 sources:
