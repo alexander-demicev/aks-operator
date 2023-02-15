@@ -30,7 +30,7 @@ jobs:
       - name: Install Updatecli in the runner
         uses: updatecli/updatecli-action@v2
       - name: Update aks operator dependency in rancher
-        run: "updatecli apply --config ./.updatecli/configs/bump-rancher-dep.yaml"
+        run: "updatecli apply --config ./.updatecli/configs/bump-rancher-dep.yaml --debug"
         env:
           UPDATECLI_GITHUB_ACTOR: ${{ github.actor }}
           UPDATECLI_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
