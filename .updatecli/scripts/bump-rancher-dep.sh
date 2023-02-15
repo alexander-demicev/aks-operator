@@ -18,6 +18,7 @@ tmp_dir="$(mktemp -d)"
 cd "${tmp_dir}" >&2
 GOPATH="$(mktemp -d)"
 export GOPATH
+
 git clone https://github.com/alexander-demicev/rancher.git . >&2
 git checkout ${rancher_branch} >&2
 
