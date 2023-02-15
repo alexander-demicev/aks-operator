@@ -23,10 +23,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
+      - name: Install Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.19.x
       - name: Install Updatecli in the runner
         uses: updatecli/updatecli-action@v2
-
       - name: Update aks operator dependency in rancher
         run: "updatecli apply --config ./.updatecli/configs/bump-rancher-dep.yaml"
         env:
