@@ -9,7 +9,7 @@ scms:
       owner: alexander-demicev
       repository: rancher
       token: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN" }}'
-      username: '{{ requiredEnv "UPDATECLI_GITHUB_ACTOR" }}'
+      # username: '{{ requiredEnv "UPDATECLI_GITHUB_ACTOR" }}'
       branch: '{{ requiredEnv "UPDATECLI_RANCHER_BRANCH" }}'
   aks-operator:
     kind: github
@@ -17,8 +17,8 @@ scms:
       owner: alexander-demicev
       repository: aks-operator
       token: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN" }}'
-      username: '{{ requiredEnv "UPDATECLI_GITHUB_ACTOR" }}'
-      branch: updatecli
+      # username: '{{ requiredEnv "UPDATECLI_GITHUB_ACTOR" }}'
+      branch: master
 
 sources:
   bump-rancher-gomod:
@@ -75,14 +75,14 @@ targets:
         spec:
             file: pkg/apis/go.mod
         scmid: rancher
-        sourceid: bump-rancher-gomod
+        sourceid: bump-rancher-apis-gomod
     bump-rancher-apis-gosum:
         name: Update AKS operator version to "{{ requiredEnv "UPDATECLI_AKS_OPERATOR_TAG" }}" in pkg/apis/go.sum
         kind: file
         spec:
             file: pkg/apis/go.sum
         scmid: rancher
-        sourceid: bump-rancher-gosum
+        sourceid: bump-rancher-apis-gosum
 
 actions:
   update-aks-operator:
