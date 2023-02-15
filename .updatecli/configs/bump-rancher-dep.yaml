@@ -1,0 +1,96 @@
+title: Bump AKS operator version
+
+scms:
+  rancher:
+    kind: github
+    spec:
+      user: aks-operator-bot
+      email: aks-operator@bot.com
+      owner: alexander-demicev
+      repository: rancher
+      token: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN" }}'
+      username: '{{ requiredEnv "UPDATECLI_GITHUB_ACTOR" }}'
+      branch: '{{ requiredEnv "UPDATECLI_RANCHER_BRANCH" }}'
+  aks-operator:
+    kind: github
+    spec:
+      owner: alexander-demicev
+      repository: aks-operator
+      token: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN" }}'
+      username: '{{ requiredEnv "UPDATECLI_GITHUB_ACTOR" }}'
+      branch: updatecli
+
+sources:
+  bump-rancher-gomod:
+    name: Update go.mod in rancher
+    kind: shell
+    spec:
+        command: ./.updatecli/scripts/bump-rancher-dep.sh "" "{{ requiredEnv "UPDATECLI_AKS_OPERATOR_TAG" }}" "go.mod"
+        environments:
+            - name: PATH
+    scmid: aks-operator
+  bump-rancher-gosum:
+    name: Update go.sum in rancher
+    kind: shell
+    spec:
+        command: ./.updatecli/scripts/bump-rancher-dep.sh "" "{{ requiredEnv "UPDATECLI_AKS_OPERATOR_TAG" }}" "go.sum"
+        environments:
+            - name: PATH
+    scmid: aks-operator
+  bump-rancher-apis-gomod:
+    name: Update pkg/apis/go.mod in rancher
+    kind: shell
+    spec:
+        command: ./.updatecli/scripts/bump-rancher-dep.sh "pkg/apis" "{{ requiredEnv "UPDATECLI_AKS_OPERATOR_TAG" }}" "go.mod"
+        environments:
+            - name: PATH
+    scmid: aks-operator
+  bump-rancher-apis-gosum:
+    name: Update pkg/apis/go.sum in rancher
+    kind: shell
+    spec:
+        command: ./.updatecli/scripts/bump-rancher-dep.sh "pkg/apis" "{{ requiredEnv "UPDATECLI_AKS_OPERATOR_TAG" }}" "go.sum"
+        environments:
+            - name: PATH
+    scmid: aks-operator
+
+targets:
+    bump-rancher-gomod:
+        name: Update AKS operator version to "{{ requiredEnv "UPDATECLI_AKS_OPERATOR_TAG" }}" in go.mod
+        kind: file
+        spec:
+            file: go.mod
+        scmid: rancher
+        sourceid: bump-rancher-gomod
+    bump-rancher-gosum:
+        name: Update AKS operator version to "{{ requiredEnv "UPDATECLI_AKS_OPERATOR_TAG" }}" in go.sum
+        kind: file
+        spec:
+            file: go.sum
+        scmid: rancher
+        sourceid: bump-rancher-gosum
+    bump-rancher-apis-gomod:
+        name: Update AKS operator version to "{{ requiredEnv "UPDATECLI_AKS_OPERATOR_TAG" }}" in pkg/apis/go.mod
+        kind: file
+        spec:
+            file: pkg/apis/go.mod
+        scmid: rancher
+        sourceid: bump-rancher-gomod
+    bump-rancher-apis-gosum:
+        name: Update AKS operator version to "{{ requiredEnv "UPDATECLI_AKS_OPERATOR_TAG" }}" in pkg/apis/go.sum
+        kind: file
+        spec:
+            file: pkg/apis/go.sum
+        scmid: rancher
+        sourceid: bump-rancher-gosum
+
+actions:
+  update-aks-operator:
+    kind: github/pullrequest
+    scmid: rancher
+    spec:
+      automerge: false
+      mergemethod: squash
+      description: "@alexander-demicev"
+      title: 'Bump AKS operator version to "{{ requiredEnv "UPDATECLI_AKS_OPERATOR_TAG" }}"'
+
