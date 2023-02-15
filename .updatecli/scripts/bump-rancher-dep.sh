@@ -3,8 +3,10 @@
 ## Please note that it will NEVER change the go.mod file (works in a temp directory)
 ##
 ## Expected arguments:
-## - 1: the path to the go.mod file
-## - 2: the new golang version in semver format (major.minor.patch)
+## - 1: rancher branch to use
+## - 2: operator version to use
+## - 3: go mod directory to use (pkg/apis or "")
+## - 4: file to print (go.mod or go.sum)
 
 set -eux
 
